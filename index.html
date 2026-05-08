@@ -184,6 +184,35 @@
     max-width: 80%; text-align: center;
   }
   .toast.show { opacity: 1; }
+
+  /* 开始页语言切换 */
+  .lang-toggle {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    transition: transform 0.15s;
+  }
+  .lang-toggle:active { transform: scale(0.95); }
+  .lang-toggle span { transition: color 0.2s, opacity 0.2s; }
+  .lang-toggle .lang-divider { color: rgba(255,255,255,0.3); }
+  .lang-toggle .active {
+    color: #ffd86b;
+  }
+  .lang-toggle .inactive {
+    color: #fff;
+    opacity: 0.5;
+  }
 </style>
 </head>
 <body>
@@ -217,6 +246,12 @@
 
     <!-- 开始界面 -->
     <div class="overlay" id="start-screen">
+      <!-- 语言切换:开始页右上角 -->
+      <div class="lang-toggle" id="start-lang-btn">
+        <span id="start-lang-zh">中文</span>
+        <span class="lang-divider">|</span>
+        <span id="start-lang-en">EN</span>
+      </div>
       <div class="title" data-i18n="game_title">跳跳跳</div>
       <div class="subtitle" data-i18n="game_subtitle">JUMP · JUMP · JUMP</div>
       <button class="btn" id="start-btn" data-i18n="start">开 始</button>
@@ -380,13 +415,29 @@
       const key = el.getAttribute('data-i18n');
       el.textContent = t(key);
     });
+    // 顶部语言按钮
     document.getElementById('lang-btn').textContent = lang === 'zh' ? 'EN' : '中';
+    // 开始页语言切换按钮
+    const zhSpan = document.getElementById('start-lang-zh');
+    const enSpan = document.getElementById('start-lang-en');
+    if (zhSpan && enSpan) {
+      zhSpan.className = lang === 'zh' ? 'active' : 'inactive';
+      enSpan.className = lang === 'en' ? 'active' : 'inactive';
+    }
     // 这些动态生成的UI需要重新渲染
     if (typeof renderSkins === 'function') renderSkins();
     if (typeof renderSignin === 'function') renderSignin();
   }
 
   document.getElementById('lang-btn').addEventListener('click', () => {
+    lang = lang === 'zh' ? 'en' : 'zh';
+    localStorage.setItem('lang', lang);
+    applyLang();
+  });
+
+  // 开始页的语言切换:点中文/EN直接切到对应语言
+  document.getElementById('start-lang-btn').addEventListener('click', (e) => {
+    // 点击时根据当前语言反向切换(无论点的是哪个span)
     lang = lang === 'zh' ? 'en' : 'zh';
     localStorage.setItem('lang', lang);
     applyLang();
