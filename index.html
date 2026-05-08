@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>跳跳跳</title>
+<title>跳跳跳 / Jump Jump</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   html, body {
@@ -14,110 +14,47 @@
     color: #fff;
     user-select: none;
   }
-  #app {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    height: 100dvh;
-  }
+  #app { display: flex; flex-direction: column; height: 100vh; height: 100dvh; }
 
-  /* ====== 广告位 ====== */
   .ad-banner, .ad-bottom {
     flex: 0 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #6b7794;
-    font-size: 11px;
-    letter-spacing: 2px;
+    display: flex; align-items: center; justify-content: center;
+    color: #6b7794; font-size: 11px; letter-spacing: 2px;
   }
-  .ad-banner {
-    height: 60px;
-    background: linear-gradient(90deg, #1a2238, #232b45);
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-  }
-  .ad-bottom {
-    height: 50px;
-    background: linear-gradient(90deg, #232b45, #1a2238);
-    border-top: 1px solid rgba(255,255,255,0.05);
-  }
+  .ad-banner { height: 60px; background: linear-gradient(90deg, #1a2238, #232b45); border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .ad-bottom { height: 50px; background: linear-gradient(90deg, #232b45, #1a2238); border-top: 1px solid rgba(255,255,255,0.05); }
 
-  /* ====== 游戏区 ====== */
-  #game-wrap {
-    flex: 1 1 auto;
-    position: relative;
-    overflow: hidden;
-  }
+  #game-wrap { flex: 1 1 auto; position: relative; overflow: hidden; }
   canvas {
-    display: block;
-    width: 100%;
-    height: 100%;
+    display: block; width: 100%; height: 100%;
     background: linear-gradient(180deg, #1a2347 0%, #2d3561 50%, #4a3d6b 100%);
   }
 
-  /* HUD */
   .hud {
-    position: absolute;
-    top: 16px;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: space-between;
-    padding: 0 20px;
-    pointer-events: none;
-    z-index: 5;
+    position: absolute; top: 16px; left: 0; right: 0;
+    display: flex; justify-content: space-between; padding: 0 20px;
+    pointer-events: none; z-index: 5;
   }
   .score-wrap { display: flex; flex-direction: column; }
-  .score {
-    font-size: 42px;
-    font-weight: 800;
-    text-shadow: 0 2px 12px rgba(0,0,0,0.4);
-    letter-spacing: -1px;
-    line-height: 1;
-  }
-  .combo {
-    font-size: 14px;
-    color: #ffd86b;
-    margin-top: 4px;
-    opacity: 0;
-    transform: translateY(-4px);
-    transition: opacity 0.2s, transform 0.2s;
-  }
+  .score { font-size: 42px; font-weight: 800; text-shadow: 0 2px 12px rgba(0,0,0,0.4); letter-spacing: -1px; line-height: 1; }
+  .combo { font-size: 14px; color: #ffd86b; margin-top: 4px; opacity: 0; transform: translateY(-4px); transition: opacity 0.2s, transform 0.2s; }
   .combo.show { opacity: 1; transform: translateY(0); }
   .right-info { text-align: right; }
   .best { font-size: 12px; opacity: 0.7; }
-  .coin-display {
-    font-size: 14px;
-    margin-top: 4px;
-    color: #ffd86b;
-    font-weight: 600;
-  }
+  .coin-display { font-size: 14px; margin-top: 4px; color: #ffd86b; font-weight: 600; }
 
   .hint {
-    position: absolute;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 13px;
-    opacity: 0.6;
-    letter-spacing: 1px;
-    pointer-events: none;
-    z-index: 5;
-    text-align: center;
-    white-space: nowrap;
+    position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+    font-size: 13px; opacity: 0.6; letter-spacing: 1px;
+    pointer-events: none; z-index: 5; text-align: center; white-space: nowrap;
   }
   .hint.hidden { opacity: 0; }
 
-  /* 浮动得分提示 */
   .float-score {
-    position: absolute;
-    pointer-events: none;
-    font-size: 28px;
-    font-weight: 800;
-    color: #ffd86b;
+    position: absolute; pointer-events: none;
+    font-size: 28px; font-weight: 800; color: #ffd86b;
     text-shadow: 0 2px 8px rgba(0,0,0,0.5);
-    z-index: 6;
-    animation: floatUp 1s ease-out forwards;
+    z-index: 6; animation: floatUp 1s ease-out forwards;
   }
   @keyframes floatUp {
     0% { opacity: 0; transform: translateY(0) scale(0.5); }
@@ -125,141 +62,84 @@
     100% { opacity: 0; transform: translateY(-60px) scale(1); }
   }
 
-  /* ====== 通用遮罩 ====== */
   .overlay {
-    position: absolute;
-    inset: 0;
+    position: absolute; inset: 0;
     background: rgba(14, 19, 32, 0.88);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    z-index: 10;
-    transition: opacity 0.3s;
-    overflow-y: auto;
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 20px; z-index: 10;
+    transition: opacity 0.3s; overflow-y: auto;
   }
   .overlay.hidden { opacity: 0; pointer-events: none; }
 
   .title {
-    font-size: 56px;
-    font-weight: 800;
+    font-size: 56px; font-weight: 800;
     background: linear-gradient(135deg, #ffd86b, #ff7eb3);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    margin-bottom: 8px;
-    letter-spacing: -2px;
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    margin-bottom: 8px; letter-spacing: -2px;
+    text-align: center;
   }
-  .subtitle {
-    font-size: 13px;
-    opacity: 0.6;
-    margin-bottom: 28px;
-    letter-spacing: 2px;
-  }
+  .subtitle { font-size: 13px; opacity: 0.6; margin-bottom: 28px; letter-spacing: 2px; }
   .end-score { font-size: 14px; opacity: 0.6; margin-bottom: 4px; }
   .end-num { font-size: 64px; font-weight: 800; line-height: 1; margin-bottom: 4px; }
-  .end-best { font-size: 13px; opacity: 0.5; margin-bottom: 24px; }
+  .end-best { font-size: 13px; opacity: 0.5; margin-bottom: 24px; text-align: center; }
 
-  /* 按钮 */
   .btn {
     padding: 14px 40px;
     background: linear-gradient(135deg, #ffd86b, #ff7eb3);
-    color: #1a1a2e;
-    border: none;
-    border-radius: 100px;
-    font-size: 17px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    cursor: pointer;
-    box-shadow: 0 8px 24px rgba(255, 126, 179, 0.3);
-    transition: transform 0.15s;
-    margin-bottom: 10px;
-    min-width: 200px;
+    color: #1a1a2e; border: none; border-radius: 100px;
+    font-size: 17px; font-weight: 700; letter-spacing: 1px;
+    cursor: pointer; box-shadow: 0 8px 24px rgba(255, 126, 179, 0.3);
+    transition: transform 0.15s; margin-bottom: 10px; min-width: 200px;
   }
   .btn:active { transform: scale(0.96); }
   .btn-secondary {
-    background: rgba(255,255,255,0.08);
-    color: #fff;
+    background: rgba(255,255,255,0.08); color: #fff;
     border: 1px solid rgba(255,255,255,0.15);
-    box-shadow: none;
-    font-size: 14px;
-    padding: 12px 32px;
-  }
-  .btn-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
+    box-shadow: none; font-size: 14px; padding: 12px 32px;
   }
 
-  /* 顶部小按钮 */
   .top-buttons {
-    position: absolute;
-    top: 70px;
-    right: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    z-index: 5;
+    position: absolute; top: 70px; right: 16px;
+    display: flex; flex-direction: column; gap: 8px; z-index: 5;
   }
   .icon-btn {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
+    width: 42px; height: 42px; border-radius: 50%;
     background: rgba(255,255,255,0.1);
     backdrop-filter: blur(8px);
     border: 1px solid rgba(255,255,255,0.15);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 20px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 18px;
     transition: transform 0.15s;
+    position: relative;
   }
   .icon-btn:active { transform: scale(0.9); }
   .icon-btn.alert::after {
-    content: '';
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    background: #ff5e5e;
-    border-radius: 50%;
-    top: 8px;
-    right: 8px;
+    content: ''; position: absolute;
+    width: 8px; height: 8px; background: #ff5e5e;
+    border-radius: 50%; top: 8px; right: 8px;
+  }
+  .lang-btn {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
   }
 
-  /* 皮肤面板 */
-  .panel-title {
-    font-size: 28px;
-    font-weight: 800;
-    margin-bottom: 6px;
-  }
+  .panel-title { font-size: 28px; font-weight: 800; margin-bottom: 6px; }
   .panel-sub { font-size: 12px; opacity: 0.6; margin-bottom: 24px; letter-spacing: 1px; }
 
   .skins {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-    width: 100%;
-    max-width: 360px;
-    margin-bottom: 20px;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+    width: 100%; max-width: 360px; margin-bottom: 20px;
   }
   .skin-card {
     aspect-ratio: 1;
     background: rgba(255,255,255,0.05);
     border: 2px solid rgba(255,255,255,0.1);
     border-radius: 16px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    position: relative;
-    transition: all 0.2s;
-    overflow: hidden;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    cursor: pointer; position: relative;
+    transition: all 0.2s; overflow: hidden;
   }
   .skin-card.owned { border-color: rgba(255,216,107,0.4); }
   .skin-card.active {
@@ -268,91 +148,49 @@
     transform: scale(1.04);
   }
   .skin-preview {
-    width: 36px;
-    height: 50px;
+    width: 36px; height: 50px;
     border-radius: 50% 50% 45% 45% / 60% 60% 40% 40%;
     margin-bottom: 8px;
   }
-  .skin-name { font-size: 11px; font-weight: 600; }
-  .skin-cost {
-    font-size: 10px;
-    opacity: 0.7;
-    margin-top: 2px;
-    color: #ffd86b;
-  }
+  .skin-name { font-size: 11px; font-weight: 600; text-align: center; padding: 0 4px; }
+  .skin-cost { font-size: 10px; opacity: 0.7; margin-top: 2px; color: #ffd86b; text-align: center; }
   .skin-card.locked .skin-preview { filter: grayscale(1) brightness(0.5); }
   .skin-card.locked .skin-name { opacity: 0.5; }
 
-  /* 签到面板 */
   .signin-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 6px;
-    width: 100%;
-    max-width: 360px;
-    margin-bottom: 20px;
+    display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px;
+    width: 100%; max-width: 360px; margin-bottom: 20px;
   }
   .day-card {
     aspect-ratio: 0.8;
     background: rgba(255,255,255,0.05);
     border: 1px solid rgba(255,255,255,0.1);
     border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: 10px;
-    position: relative;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    font-size: 10px; position: relative;
   }
-  .day-card.signed {
-    background: rgba(255,216,107,0.2);
-    border-color: rgba(255,216,107,0.5);
-  }
-  .day-card.today {
-    border-color: #ff7eb3;
-    box-shadow: 0 0 12px rgba(255,126,179,0.4);
-  }
-  .day-num { font-size: 11px; opacity: 0.6; margin-bottom: 2px; }
-  .day-reward { font-size: 14px; font-weight: 700; color: #ffd86b; }
+  .day-card.signed { background: rgba(255,216,107,0.2); border-color: rgba(255,216,107,0.5); }
+  .day-card.today { border-color: #ff7eb3; box-shadow: 0 0 12px rgba(255,126,179,0.4); }
+  .day-num { font-size: 10px; opacity: 0.6; margin-bottom: 2px; }
+  .day-reward { font-size: 13px; font-weight: 700; color: #ffd86b; }
   .day-card.signed .day-reward::after { content: ' ✓'; color: #6bff9e; }
 
-  /* Toast */
   .toast {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(0,0,0,0.85);
-    color: #fff;
-    padding: 14px 24px;
-    border-radius: 12px;
-    font-size: 14px;
-    z-index: 100;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.3s;
+    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    background: rgba(0,0,0,0.85); color: #fff;
+    padding: 14px 24px; border-radius: 12px; font-size: 14px;
+    z-index: 100; pointer-events: none;
+    opacity: 0; transition: opacity 0.3s;
+    max-width: 80%; text-align: center;
   }
   .toast.show { opacity: 1; }
-
-  .row { display: flex; gap: 8px; }
 </style>
 </head>
 <body>
 <div id="app">
 
-  <!-- ============================================ -->
-  <!-- 顶部横幅广告位 — 替换为 AdSense / AdMob 代码 -->
-  <!-- ============================================ -->
-  <div class="ad-banner" id="ad-top">
-    <!-- AdSense 示例:
-    <ins class="adsbygoogle"
-         style="display:inline-block;width:320px;height:50px"
-         data-ad-client="ca-pub-XXXXXXXXXX"
-         data-ad-slot="1234567890"></ins>
-    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-    -->
-    广告位 · 顶部 BANNER
-  </div>
+  <!-- 顶部广告位 -->
+  <div class="ad-banner" id="ad-top" data-i18n="ad_top">广告位 · 顶部 BANNER</div>
 
   <div id="game-wrap">
     <canvas id="canvas"></canvas>
@@ -360,66 +198,66 @@
     <div class="hud">
       <div class="score-wrap">
         <div class="score" id="score">0</div>
-        <div class="combo" id="combo">连击 ×2</div>
+        <div class="combo" id="combo"></div>
       </div>
       <div class="right-info">
-        <div class="best">最佳 <span id="best">0</span></div>
+        <div class="best"><span data-i18n="best">最佳</span> <span id="best">0</span></div>
         <div class="coin-display">🪙 <span id="coins">0</span></div>
       </div>
     </div>
 
     <div class="top-buttons">
-      <div class="icon-btn" id="signin-btn" title="签到">📅</div>
-      <div class="icon-btn" id="skin-btn" title="皮肤">👕</div>
-      <div class="icon-btn" id="sound-btn" title="声音">🔊</div>
+      <div class="icon-btn lang-btn" id="lang-btn" title="Language">EN</div>
+      <div class="icon-btn" id="signin-btn">📅</div>
+      <div class="icon-btn" id="skin-btn">👕</div>
+      <div class="icon-btn" id="sound-btn">🔊</div>
     </div>
 
-    <div class="hint" id="hint">按住屏幕蓄力 · 松开起跳</div>
+    <div class="hint" id="hint" data-i18n="hint">按住屏幕蓄力 · 松开起跳</div>
 
     <!-- 开始界面 -->
     <div class="overlay" id="start-screen">
-      <div class="title">跳跳跳</div>
-      <div class="subtitle">JUMP · JUMP · JUMP</div>
-      <button class="btn" id="start-btn">开 始</button>
-      <button class="btn btn-secondary" id="start-skin-btn">👕 皮肤</button>
-      <button class="btn btn-secondary" id="start-share-btn">📤 分享给好友</button>
+      <div class="title" data-i18n="game_title">跳跳跳</div>
+      <div class="subtitle" data-i18n="game_subtitle">JUMP · JUMP · JUMP</div>
+      <button class="btn" id="start-btn" data-i18n="start">开 始</button>
+      <button class="btn btn-secondary" id="start-skin-btn"><span>👕 </span><span data-i18n="skin">皮肤</span></button>
+      <button class="btn btn-secondary" id="start-share-btn"><span>📤 </span><span data-i18n="share_friends">分享给好友</span></button>
     </div>
 
     <!-- 结束界面 -->
     <div class="overlay hidden" id="end-screen">
-      <div class="end-score">本局得分</div>
+      <div class="end-score" data-i18n="this_round">本局得分</div>
       <div class="end-num" id="end-num">0</div>
-      <div class="end-best">最佳 <span id="end-best">0</span> · 获得 🪙<span id="earned-coins">0</span></div>
-      <button class="btn" id="restart-btn">再来一局</button>
-      <!-- 激励视频广告位 — 看广告复活 -->
-      <button class="btn btn-secondary" id="revive-btn">📺 看广告复活</button>
-      <button class="btn btn-secondary" id="end-share-btn">📤 分享炫耀战绩</button>
+      <div class="end-best">
+        <span data-i18n="best">最佳</span> <span id="end-best">0</span> · 
+        <span data-i18n="earned">获得</span> 🪙<span id="earned-coins">0</span>
+      </div>
+      <button class="btn" id="restart-btn" data-i18n="play_again">再来一局</button>
+      <button class="btn btn-secondary" id="revive-btn"><span>📺 </span><span data-i18n="revive">看广告复活</span></button>
+      <button class="btn btn-secondary" id="end-share-btn"><span>📤 </span><span data-i18n="share_score">分享炫耀战绩</span></button>
     </div>
 
     <!-- 皮肤面板 -->
     <div class="overlay hidden" id="skin-screen">
-      <div class="panel-title">皮肤</div>
+      <div class="panel-title" data-i18n="skin">皮肤</div>
       <div class="panel-sub">SKINS · 🪙 <span id="skin-coins">0</span></div>
       <div class="skins" id="skin-grid"></div>
-      <button class="btn btn-secondary" id="skin-close">关 闭</button>
+      <button class="btn btn-secondary" id="skin-close" data-i18n="close">关 闭</button>
     </div>
 
     <!-- 签到面板 -->
     <div class="overlay hidden" id="signin-screen">
-      <div class="panel-title">每日签到</div>
-      <div class="panel-sub">连续签到奖励翻倍</div>
+      <div class="panel-title" data-i18n="daily_signin">每日签到</div>
+      <div class="panel-sub" data-i18n="signin_sub">连续签到奖励翻倍</div>
       <div class="signin-grid" id="signin-grid"></div>
-      <button class="btn" id="signin-action-btn">立即签到</button>
-      <button class="btn btn-secondary" id="signin-close">关 闭</button>
+      <button class="btn" id="signin-action-btn" data-i18n="signin_now">立即签到</button>
+      <button class="btn btn-secondary" id="signin-close" data-i18n="close">关 闭</button>
     </div>
 
   </div>
 
   <!-- 底部广告位 -->
-  <div class="ad-bottom" id="ad-bottom">
-    <!-- AdSense 自适应横幅放这里 -->
-    广告位 · 底部
-  </div>
+  <div class="ad-bottom" id="ad-bottom" data-i18n="ad_bottom">广告位 · 底部</div>
 
 </div>
 
@@ -427,6 +265,132 @@
 
 <script>
 (function(){
+
+  // =========================================================
+  // 国际化 i18n
+  // =========================================================
+  const I18N = {
+    'zh': {
+      ad_top: '广告位 · 顶部 BANNER',
+      ad_bottom: '广告位 · 底部',
+      best: '最佳',
+      hint: '按住屏幕蓄力 · 松开起跳',
+      game_title: '跳跳跳',
+      game_subtitle: 'JUMP · JUMP · JUMP',
+      start: '开 始',
+      skin: '皮肤',
+      share_friends: '分享给好友',
+      this_round: '本局得分',
+      earned: '获得',
+      play_again: '再来一局',
+      revive: '看广告复活',
+      share_score: '分享炫耀战绩',
+      close: '关 闭',
+      daily_signin: '每日签到',
+      signin_sub: '连续签到奖励翻倍',
+      signin_now: '立即签到',
+      signed_today: '今日已签到',
+      day_n: '第%d天',
+      combo_x: '连击 ×%d',
+      perfect: '+5 完美!',
+      switched_to: '已切换到「%s」',
+      unlocked: '解锁成功:%s',
+      share_unlock: '分享成功,解锁:%s',
+      bought: '购买成功!',
+      not_enough_coins: '金币不够,继续跳吧~',
+      signin_success: '签到成功!+🪙%d',
+      ad_simulating: '模拟广告播放中... (3秒)',
+      copied: '链接已复制,快去粘贴给好友!',
+      copy_manually: '请手动复制网址分享',
+      share_text: '我在「跳跳跳」拿了 %d 分,你来挑战一下?',
+      use_this: '点击使用',
+      using: '使用中',
+      buy_ad: '📺 看广告',
+      buy_share: '📤 分享',
+      skin_default: '小桃子',
+      skin_mint: '薄荷糖',
+      skin_grape: '紫葡萄',
+      skin_fire: '小火苗',
+      skin_ice: '冰晶',
+      skin_gold: '黄金',
+      skin_panda: '熊猫',
+      skin_rainbow: '彩虹',
+      skin_galaxy: '星河',
+    },
+    'en': {
+      ad_top: 'AD · TOP BANNER',
+      ad_bottom: 'AD · BOTTOM',
+      best: 'Best',
+      hint: 'Hold to charge · Release to jump',
+      game_title: 'Jump Jump',
+      game_subtitle: 'JUMP · JUMP · JUMP',
+      start: 'START',
+      skin: 'Skins',
+      share_friends: 'Share with friends',
+      this_round: 'Your Score',
+      earned: 'Earned',
+      play_again: 'Play Again',
+      revive: 'Watch Ad to Revive',
+      share_score: 'Share Your Score',
+      close: 'Close',
+      daily_signin: 'Daily Check-in',
+      signin_sub: 'Streak rewards double up',
+      signin_now: 'Check in Now',
+      signed_today: 'Already Checked In',
+      day_n: 'Day %d',
+      combo_x: 'Combo ×%d',
+      perfect: '+5 PERFECT!',
+      switched_to: 'Switched to "%s"',
+      unlocked: 'Unlocked: %s',
+      share_unlock: 'Shared! Unlocked: %s',
+      bought: 'Purchased!',
+      not_enough_coins: 'Not enough coins, keep jumping!',
+      signin_success: 'Checked in! +🪙%d',
+      ad_simulating: 'Simulating ad... (3s)',
+      copied: 'Link copied! Paste to share.',
+      copy_manually: 'Please copy the URL manually',
+      share_text: 'I scored %d in Jump Jump, can you beat me?',
+      use_this: 'Tap to use',
+      using: 'In use',
+      buy_ad: '📺 Watch Ad',
+      buy_share: '📤 Share',
+      skin_default: 'Peach',
+      skin_mint: 'Mint',
+      skin_grape: 'Grape',
+      skin_fire: 'Flame',
+      skin_ice: 'Ice',
+      skin_gold: 'Gold',
+      skin_panda: 'Panda',
+      skin_rainbow: 'Rainbow',
+      skin_galaxy: 'Galaxy',
+    }
+  };
+
+  let lang = localStorage.getItem('lang') || (navigator.language.startsWith('zh') ? 'zh' : 'en');
+
+  function t(key, ...args) {
+    let s = (I18N[lang] && I18N[lang][key]) || I18N['en'][key] || key;
+    args.forEach(a => { s = s.replace(/%[ds]/, a); });
+    return s;
+  }
+
+  function applyLang() {
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      el.textContent = t(key);
+    });
+    document.getElementById('lang-btn').textContent = lang === 'zh' ? 'EN' : '中';
+    // 这些动态生成的UI需要重新渲染
+    if (typeof renderSkins === 'function') renderSkins();
+    if (typeof renderSignin === 'function') renderSignin();
+  }
+
+  document.getElementById('lang-btn').addEventListener('click', () => {
+    lang = lang === 'zh' ? 'en' : 'zh';
+    localStorage.setItem('lang', lang);
+    applyLang();
+  });
 
   // =========================================================
   // 工具函数
@@ -450,7 +414,7 @@
   }
 
   // =========================================================
-  // 音效系统(Web Audio API,无需音频文件)
+  // 音效
   // =========================================================
   let audioCtx = null;
   let soundOn = LS.get('sound_on', true);
@@ -489,15 +453,15 @@
   // 皮肤系统
   // =========================================================
   const SKINS = [
-    { id: 'default', name: '小桃子', cost: 0,    grad: ['#ff7eb3', '#ffd86b'] },
-    { id: 'mint',    name: '薄荷糖', cost: 100,  grad: ['#6bffa8', '#6be3ff'] },
-    { id: 'grape',   name: '紫葡萄', cost: 200,  grad: ['#a06bff', '#ff6bd9'] },
-    { id: 'fire',    name: '小火苗', cost: 500,  grad: ['#ff4d4d', '#ffb84d'] },
-    { id: 'ice',     name: '冰晶',   cost: 800,  grad: ['#a6e9ff', '#ffffff'] },
-    { id: 'gold',    name: '黄金',   cost: 1500, grad: ['#ffd700', '#ff9500'] },
-    { id: 'panda',   name: '熊猫',   cost: 'ad', grad: ['#ffffff', '#2a2a2a'] },
-    { id: 'rainbow', name: '彩虹',   cost: 'share', grad: ['#ff5e5e', '#5eaaff'] },
-    { id: 'galaxy',  name: '星河',   cost: 3000, grad: ['#1a0a3a', '#7e5eff'] },
+    { id: 'default', nameKey: 'skin_default', cost: 0,    grad: ['#ff7eb3', '#ffd86b'] },
+    { id: 'mint',    nameKey: 'skin_mint',    cost: 100,  grad: ['#6bffa8', '#6be3ff'] },
+    { id: 'grape',   nameKey: 'skin_grape',   cost: 200,  grad: ['#a06bff', '#ff6bd9'] },
+    { id: 'fire',    nameKey: 'skin_fire',    cost: 500,  grad: ['#ff4d4d', '#ffb84d'] },
+    { id: 'ice',     nameKey: 'skin_ice',     cost: 800,  grad: ['#a6e9ff', '#ffffff'] },
+    { id: 'gold',    nameKey: 'skin_gold',    cost: 1500, grad: ['#ffd700', '#ff9500'] },
+    { id: 'panda',   nameKey: 'skin_panda',   cost: 'ad', grad: ['#ffffff', '#2a2a2a'] },
+    { id: 'rainbow', nameKey: 'skin_rainbow', cost: 'share', grad: ['#ff5e5e', '#5eaaff'] },
+    { id: 'galaxy',  nameKey: 'skin_galaxy',  cost: 3000, grad: ['#1a0a3a', '#7e5eff'] },
   ];
 
   let coins = LS.get('coins', 0);
@@ -517,6 +481,7 @@
 
   function renderSkins() {
     const grid = document.getElementById('skin-grid');
+    if (!grid) return;
     grid.innerHTML = '';
     SKINS.forEach(skin => {
       const owned = ownedSkins.includes(skin.id);
@@ -531,28 +496,22 @@
 
       const name = document.createElement('div');
       name.className = 'skin-name';
-      name.textContent = skin.name;
+      name.textContent = t(skin.nameKey);
       card.appendChild(name);
 
+      const tip = document.createElement('div');
+      tip.className = 'skin-cost';
       if (!owned) {
-        const cost = document.createElement('div');
-        cost.className = 'skin-cost';
-        if (skin.cost === 'ad') cost.textContent = '📺 看广告';
-        else if (skin.cost === 'share') cost.textContent = '📤 分享';
-        else cost.textContent = '🪙 ' + skin.cost;
-        card.appendChild(cost);
+        if (skin.cost === 'ad') tip.textContent = t('buy_ad');
+        else if (skin.cost === 'share') tip.textContent = t('buy_share');
+        else tip.textContent = '🪙 ' + skin.cost;
       } else if (!active) {
-        const tip = document.createElement('div');
-        tip.className = 'skin-cost';
-        tip.textContent = '点击使用';
-        card.appendChild(tip);
+        tip.textContent = t('use_this');
       } else {
-        const tip = document.createElement('div');
-        tip.className = 'skin-cost';
-        tip.textContent = '使用中';
+        tip.textContent = t('using');
         tip.style.color = '#6bff9e';
-        card.appendChild(tip);
       }
+      card.appendChild(tip);
 
       card.addEventListener('click', () => handleSkinClick(skin));
       grid.appendChild(card);
@@ -563,25 +522,23 @@
     const owned = ownedSkins.includes(skin.id);
     if (owned) {
       activeSkin = skin.id;
-      saveSkins();
-      renderSkins();
+      saveSkins(); renderSkins();
       sfx.coin();
-      toast('已切换到「' + skin.name + '」');
+      toast(t('switched_to', t(skin.nameKey)));
       return;
     }
     if (skin.cost === 'ad') {
-      // 激励视频解锁:接入 SDK 后,在视频播完回调里执行下面逻辑
       simulateAd(() => {
         ownedSkins.push(skin.id);
         saveSkins(); renderSkins();
-        toast('解锁成功:' + skin.name);
+        toast(t('unlocked', t(skin.nameKey)));
         sfx.coin();
       });
     } else if (skin.cost === 'share') {
       doShare(() => {
         ownedSkins.push(skin.id);
         saveSkins(); renderSkins();
-        toast('分享成功,解锁:' + skin.name);
+        toast(t('share_unlock', t(skin.nameKey)));
         sfx.coin();
       });
     } else {
@@ -591,25 +548,24 @@
         activeSkin = skin.id;
         saveSkins(); renderSkins();
         sfx.coin();
-        toast('购买成功!');
+        toast(t('bought'));
       } else {
-        toast('金币不够,继续跳吧~');
+        toast(t('not_enough_coins'));
       }
     }
   }
 
   // =========================================================
-  // 每日签到
+  // 签到
   // =========================================================
   const SIGNIN_REWARDS = [10, 20, 30, 50, 80, 120, 200];
-  let signInData = LS.get('signin', { lastDate: '', streak: 0, signedDates: [] });
+  let signInData = LS.get('signin', { lastDate: '', streak: 0 });
 
-  function isSignedToday() {
-    return signInData.lastDate === today();
-  }
+  function isSignedToday() { return signInData.lastDate === today(); }
 
   function renderSignin() {
     const grid = document.getElementById('signin-grid');
+    if (!grid) return;
     grid.innerHTML = '';
     const streak = signInData.streak;
     const signedToday = isSignedToday();
@@ -618,30 +574,27 @@
       const isPast = i < streak;
       const isToday = (signedToday && i === streak - 1) || (!signedToday && i === streak);
       day.className = 'day-card' + (isPast ? ' signed' : '') + (isToday ? ' today' : '');
-      day.innerHTML = `<div class="day-num">第${i+1}天</div><div class="day-reward">🪙${SIGNIN_REWARDS[i]}</div>`;
+      day.innerHTML = `<div class="day-num">${t('day_n', i+1)}</div><div class="day-reward">🪙${SIGNIN_REWARDS[i]}</div>`;
       grid.appendChild(day);
     }
     const btn = document.getElementById('signin-action-btn');
     if (signedToday) {
-      btn.textContent = '今日已签到';
+      btn.textContent = t('signed_today');
       btn.style.opacity = 0.5;
       btn.disabled = true;
     } else {
-      btn.textContent = '立即签到';
+      btn.textContent = t('signin_now');
       btn.style.opacity = 1;
       btn.disabled = false;
     }
-    // 红点提示
     document.getElementById('signin-btn').classList.toggle('alert', !signedToday);
   }
 
   function doSignin() {
     if (isSignedToday()) return;
-    // 判断是否中断了连续签到
     const yesterday = new Date(); yesterday.setDate(yesterday.getDate() - 1);
     const yKey = `${yesterday.getFullYear()}-${yesterday.getMonth()+1}-${yesterday.getDate()}`;
     if (signInData.lastDate !== yKey) signInData.streak = 0;
-
     const idx = signInData.streak % 7;
     const reward = SIGNIN_REWARDS[idx];
     coins += reward;
@@ -650,7 +603,7 @@
     LS.set('signin', signInData);
     saveSkins();
     sfx.coin();
-    toast(`签到成功!+🪙${reward}`);
+    toast(t('signin_success', reward));
     renderSignin();
   }
 
@@ -658,27 +611,25 @@
   // 分享 + 模拟广告
   // =========================================================
   function doShare(onSuccess) {
-    const text = `我在「跳跳跳」拿了 ${best} 分,你来挑战一下?`;
+    const text = t('share_text', best);
     const url = location.href;
     if (navigator.share) {
-      navigator.share({ title: '跳跳跳', text, url }).then(() => {
+      navigator.share({ title: t('game_title'), text, url }).then(() => {
         onSuccess && onSuccess();
       }).catch(() => {});
     } else if (navigator.clipboard) {
       navigator.clipboard.writeText(text + ' ' + url).then(() => {
-        toast('链接已复制,快去粘贴给好友!');
+        toast(t('copied'));
         onSuccess && onSuccess();
       });
     } else {
-      toast('请手动复制网址分享');
+      toast(t('copy_manually'));
       onSuccess && onSuccess();
     }
   }
 
   function simulateAd(onComplete) {
-    // 实际接入 AdMob/穿山甲 SDK 时,把这段替换成真实激励视频调用
-    // window.AdMob.showRewardVideoAd({ onReward: onComplete });
-    toast('模拟广告播放中... (3秒)', 3000);
+    toast(t('ad_simulating'), 3000);
     setTimeout(onComplete, 3000);
   }
 
@@ -713,10 +664,7 @@
   const STATE = { READY: 0, CHARGING: 1, JUMPING: 2, OVER: 3 };
   let state = STATE.READY;
 
-  const player = {
-    x: 0, y: 0, w: 18, h: 38,
-    vx: 0, vy: 0, squash: 0, rotation: 0,
-  };
+  const player = { x: 0, y: 0, w: 18, h: 38, vx: 0, vy: 0, squash: 0, rotation: 0 };
 
   let platforms = [];
   let camera = { x: 0 };
@@ -728,8 +676,7 @@
   let chargePower = 0;
   let usedRevive = false;
   let earnedThisRound = 0;
-  let floatScores = []; // 浮动分数动画
-  let particles = [];   // 粒子效果
+  let particles = [];
 
   bestEl.textContent = best;
   updateCoinsUI();
@@ -740,8 +687,7 @@
     const w = rand(60, 90);
     const gap = rand(70, 160);
     return {
-      x: prevX + gap,
-      y: prevY + rand(-20, 20),
+      x: prevX + gap, y: prevY + rand(-20, 20),
       w, h: 22, type,
       color: `hsl(${Math.floor(rand(180, 320))}, 60%, 65%)`,
     };
@@ -763,7 +709,7 @@
     earnedThisRound = 0;
     chargePower = 0;
     usedRevive = false;
-    floatScores = []; particles = [];
+    particles = [];
     scoreEl.textContent = 0;
     comboEl.classList.remove('show');
     state = STATE.READY;
@@ -789,7 +735,6 @@
     }
     bestEl.textContent = best;
     endBestEl.textContent = best;
-    // 累加金币
     coins += earnedThisRound;
     saveSkins();
     earnedCoinsEl.textContent = earnedThisRound;
@@ -797,7 +742,6 @@
     setTimeout(() => endScreen.classList.remove('hidden'), 600);
   }
 
-  // 控制
   function onPressStart(e) {
     if (e.target !== canvas) return;
     e.preventDefault();
@@ -824,7 +768,6 @@
   canvas.addEventListener('mousedown', onPressStart);
   canvas.addEventListener('mouseup', onPressEnd);
 
-  // UI 按钮
   document.getElementById('start-btn').addEventListener('click', startGame);
   document.getElementById('restart-btn').addEventListener('click', startGame);
 
@@ -877,20 +820,15 @@
     });
   });
 
-  // =========================================================
   // 物理 + 渲染
-  // =========================================================
   const G = 0.6;
 
   function spawnParticles(x, y, color, n=8) {
     for (let i = 0; i < n; i++) {
       particles.push({
         x, y,
-        vx: rand(-3, 3),
-        vy: rand(-5, -1),
-        life: 1,
-        color,
-        size: rand(2, 5),
+        vx: rand(-3, 3), vy: rand(-5, -1),
+        life: 1, color, size: rand(2, 5),
       });
     }
   }
@@ -931,7 +869,6 @@
 
             const idx = platforms.indexOf(p);
             if (idx > 0) {
-              // 连击
               combo += 1;
               comboTimer = 120;
               const baseScore = idx;
@@ -945,19 +882,18 @@
               spawnParticles(player.x, player.y, getSkin().grad[0], 12);
 
               if (combo >= 2) {
-                comboEl.textContent = `连击 ×${combo}`;
+                comboEl.textContent = t('combo_x', combo);
                 comboEl.classList.add('show');
                 sfx.combo(combo);
               } else {
                 sfx.land();
               }
 
-              // 中心命中加分
               const centerDist = Math.abs(player.x - p.x);
               if (centerDist < 8) {
                 score += 5; earnedThisRound += 5;
                 scoreEl.textContent = score;
-                spawnFloatScore(p.x, p.y - 20, '+5 完美!');
+                spawnFloatScore(p.x, p.y - 20, t('perfect'));
                 spawnParticles(p.x, p.y, '#ffd86b', 20);
               }
 
@@ -977,7 +913,6 @@
       if (player.y > H + 100) endGame();
     }
 
-    // 连击计时
     if (comboTimer > 0) {
       comboTimer--;
       if (comboTimer === 0) {
@@ -986,7 +921,6 @@
       }
     }
 
-    // 粒子
     particles.forEach(pt => {
       pt.x += pt.vx; pt.y += pt.vy;
       pt.vy += 0.2;
@@ -994,7 +928,6 @@
     });
     particles = particles.filter(pt => pt.life > 0);
 
-    // 相机
     const targetCamX = player.x - W * 0.3;
     camera.x += (targetCamX - camera.x) * 0.1;
   }
@@ -1023,7 +956,6 @@
       ctx.fillStyle = 'rgba(0,0,0,0.15)';
       ctx.fillRect(x - p.w/2, y + p.h/2 - 4, p.w, 4);
     }
-    // 中心点
     ctx.fillStyle = 'rgba(255,255,255,0.5)';
     ctx.beginPath();
     ctx.arc(x, y - p.h/2, 2, 0, Math.PI * 2);
@@ -1087,7 +1019,6 @@
     }
   }
 
-  // 蓄力指示
   function drawChargeBar() {
     if (state !== STATE.CHARGING) return;
     const dt = Math.min(1500, performance.now() - chargeStart);
@@ -1113,10 +1044,12 @@
   }
   loop();
 
-  // 进入时检查签到
   if (!isSignedToday()) {
     document.getElementById('signin-btn').classList.add('alert');
   }
+
+  // 初始应用语言
+  applyLang();
 
 })();
 </script>
